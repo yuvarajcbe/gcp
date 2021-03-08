@@ -120,7 +120,7 @@ resource "google_compute_instance" "vm_instance_public" {
       ssh-keys = "${var.ssh_username}:${file(var.ssh_pub_key_path)}"
   } 
 
-    metadata_startup_script = "apt-get update; apt-get install -yq default-jdk docker*; systemctl start docker"
+    metadata_startup_script = "apt-get update; apt-get install -yq default-jdk docker* maven; systemctl start docker"
 #
  network_interface {
     #network       = google_compute_network.vpc.name
