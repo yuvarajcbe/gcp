@@ -6,7 +6,6 @@ terraform {
 
 provider "google" {
   project = var.app_project
-  #credentials = file(var.gcp_auth_file)
   region  = var.gcp_region_1
   zone    = var.gcp_zone_1
 }
@@ -15,7 +14,6 @@ terraform {
   backend "gcs" {
     bucket      = "yuva-global-gsb"
     prefix      = "network-tfsate"
-   #credentials = ".././GCP/calcium-field-306715-5333e7bec98a.json"
   }
 }
 
@@ -90,24 +88,6 @@ resource "google_compute_firewall" "allow-ssh" {
   }
   target_tags = ["ssh"]
 }
-
-# allow rdp
-#resource "google_compute_firewall" "allow-rdp" {
-#  name    = "${var.app_name}-${var.app_environment}-fw-allow-rdp"
-#  network = "${google_compute_network.vpc.name}"
-#  allow {
-#    protocol = "tcp"
-#    ports    = ["3389"]
-#  }
-#  target_tags = ["rdp"]
-#}
-
-# Create Google Cloud VM | vm.tf
-
-# Terraform plugin for creating random ids
-#resource "random_id" "instance_id" {
-# byte_length = 4
-#}
 
 # Create VM #1
 resource "google_compute_instance" "vm_instance_public" {

@@ -1,11 +1,5 @@
 # Google Cloud connection & authentication and Application configuration | variables-auth.tf
 
-# GCP authentication file
-#variable "gcp_auth_file" {
-#  type = string
-#  description = "GCP authentication file"
-#}
-
 # define GCP project name
 variable "app_project" {
   type = string
@@ -51,19 +45,15 @@ variable "public_subnet_cidr_1" {
   description = "Public subnet CIDR 1"
 }
 
-#define Node Count
-#variable "node_count" {
-#  type = number  
-#}
 #ssh user
 variable "ssh_username" {
   type = string
 }
 
-#ssh_password
-variable "ssh_pub_key_path" {
-  type = string
-}
+#ssh_password---if you want input ssh key enable it below variables.
+#variable "ssh_pub_key_path" {
+#  type = string
+#}
 
 # VM-type
 variable "vm_type" {
