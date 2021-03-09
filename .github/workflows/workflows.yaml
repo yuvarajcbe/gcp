@@ -71,10 +71,10 @@ jobs:
 #       && echo 'github.com ssh-rsa ${{ env.GITHUB_COM_SSH_RSA_PUBLIC_KEY }}' > known_hosts
 #         && chmod 400 id_rsa known_hosts
 #         && ssh -i ./id_rsa -o UserKnownHostsFile=./known_hosts"
-
--   name: Setup SSH Keys and known_hosts
-                env:
-                    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-                run: |
-                    ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-                    ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+#
+#-   name: Setup SSH Keys and known_hosts
+#                env:
+#                    SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+#                run: |
+#                    ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+#                    ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
