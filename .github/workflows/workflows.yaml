@@ -53,7 +53,7 @@ jobs:
     -  name: Setup SSH Keys and known_hosts
        env:
          SSH_AUTH_SOCK: "{{ SSH_PUBLIC_KEY }}"
-        run: |
+       run: |
             ssh-agent -a $SSH_AUTH_SOCK > /dev/null
             ssh-add - <<< "${{ SSH_PUBLIC_KEY }}"
       
