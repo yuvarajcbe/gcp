@@ -61,9 +61,9 @@ variable "ssh_username" {
 }
 
 #ssh_password
-#variable "ssh_pub_key_path" {
-#  type = string
-#}
+variable "ssh_pub_key_path" {
+  type = string
+}
 
 # VM-type
 variable "vm_type" {
