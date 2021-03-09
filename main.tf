@@ -6,7 +6,7 @@ terraform {
 
 provider "google" {
   project = var.app_project
-  credentials = file(var.gcp_auth_file)
+  #credentials = file(var.gcp_auth_file)
   region  = var.gcp_region_1
   zone    = var.gcp_zone_1
 }
@@ -15,7 +15,7 @@ terraform {
   backend "gcs" {
     bucket      = "yuva-global-gsb"
     prefix      = "network-tfsate"
-   credentials = ".././GCP/calcium-field-306715-5333e7bec98a.json"
+   #credentials = ".././GCP/calcium-field-306715-5333e7bec98a.json"
   }
 }
 
