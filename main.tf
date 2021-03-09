@@ -130,13 +130,8 @@ resource "google_compute_instance" "vm_instance_public" {
 
     metadata_startup_script = "apt-get update; apt-get install -yq default-jdk docker* maven; systemctl start docker"
 #
-  service_account {
-    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
-    email  = google_service_account.default.email
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
-  }
-}
- network_interface {
+
+  network_interface {
     #network       = google_compute_network.vpc.name
     subnetwork    = google_compute_subnetwork.public_subnet_1.name
     access_config { }
