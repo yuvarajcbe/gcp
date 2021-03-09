@@ -6,9 +6,17 @@ terraform {
 
 provider "google" {
   project = var.app_project
-  credentials = file(var.gcp_auth_file)
+  #credentials = file(var.gcp_auth_file)
   region  = var.gcp_region_1
   zone    = var.gcp_zone_1
+}
+
+terraform {
+  backend "gcs" {
+    bucket      = "yuva-global-gsb"
+    prefix      = "network-tfsate"
+    #credentials = ".././GCP/calcium-field-306715-5333e7bec98a.json"
+  }
 }
 
 #Single region, public only network configuration | network.tf
@@ -31,7 +39,7 @@ resource "google_compute_subnetwork" "public_subnet_1" {
 # allow internal icmp (disable for better security)
 resource "google_compute_firewall" "allow-internal" {
   name    = "${var.app_name}-${var.app_environment}-fw-allow-internal"
-  network = "${google_compute_network.vpc.name}"
+  network = google_compute_network.vpc.name
   allow {
     protocol = "icmp"
   }
@@ -44,7 +52,7 @@ resource "google_compute_firewall" "allow-internal" {
     ports    = ["0-65535"]
   }
   source_ranges = [
-    "${var.public_subnet_cidr_1}"
+    var.public_subnet_cidr_1
   ]
 }
 
@@ -53,7 +61,7 @@ resource "google_compute_firewall" "allow-internal" {
 # Allow http
 resource "google_compute_firewall" "allow-http" {
   name    = "${var.app_name}-${var.app_environment}-fw-allow-http"
-  network = "${google_compute_network.vpc.name}"
+  network = google_compute_network.vpc.name
   allow {
     protocol = "tcp"
     ports    = ["80"]
@@ -64,7 +72,7 @@ resource "google_compute_firewall" "allow-http" {
 # allow https
 resource "google_compute_firewall" "allow-https" {
   name    = "${var.app_name}-${var.app_environment}-fw-allow-https"
-  network = "${google_compute_network.vpc.name}"
+  network = google_compute_network.vpc.name
   allow {
     protocol = "tcp"
     ports    = ["443"]
@@ -75,7 +83,7 @@ resource "google_compute_firewall" "allow-https" {
 # allow ssh
 resource "google_compute_firewall" "allow-ssh" {
   name    = "${var.app_name}-${var.app_environment}-fw-allow-ssh"
-  network = "${google_compute_network.vpc.name}"
+  network = google_compute_network.vpc.name
   allow {
     protocol = "tcp"
     ports    = ["22"]
@@ -105,26 +113,26 @@ resource "google_compute_firewall" "allow-ssh" {
 resource "google_compute_instance" "vm_instance_public" {
   count = 2  
   name         = "${var.app_name}-${var.app_environment}-vm-${count.index}"
-  machine_type = "${var.vm_type}"
+  machine_type = var.vm_type
   zone         = var.gcp_zone_1
   hostname     = "${var.app_name}-vm-${var.app_domain}"
   tags         = ["ssh","http"]
 
   boot_disk {
     initialize_params {
-      image = "${var.os_type}"
+      image = var.os_type
     }
   }
    
   metadata = {
-      ssh-keys = "${var.ssh_username}:${file(var.ssh_pub_key_path)}"
+      #ssh-keys = "${var.ssh_username}:${file(var.ssh_pub_key_path)}"
   } 
 
     metadata_startup_script = "apt-get update; apt-get install -yq default-jdk docker* maven; systemctl start docker"
 #
  network_interface {
     #network       = google_compute_network.vpc.name
-    subnetwork    = "${google_compute_subnetwork.public_subnet_1.name}"
+    subnetwork    = google_compute_subnetwork.public_subnet_1.name
     access_config { }
   }
 } 
