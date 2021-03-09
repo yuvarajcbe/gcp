@@ -51,11 +51,12 @@ jobs:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
     -  name: Setup SSH Keys and known_hosts
+       uses: hashicorp/setup-terraform@v2
        env:
          SSH_AUTH_SOCK: "{{ SSH_PUBLIC_KEY }}"
        run: |
            # ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-            ssh-add - <<< "${{ SSH_PUBLIC_KEY }}"
+            ssh-add - <<< "$SSH_AUTH_SOCK"
       
 
 
