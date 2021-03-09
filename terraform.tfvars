@@ -7,7 +7,7 @@ app_project     = "calcium-field-306715"
 # GCP Settings
 gcp_region_1  = "us-east1"
 gcp_zone_1    = "us-east1-b"
-#gcp_auth_file = ".././GCP/calcium-field-306715-5333e7bec98a.json"
+gcp_auth_file = ".././GCP/calcium-field-306715-5333e7bec98a.json"
 
 # GCP Netwok
 public_subnet_cidr_1  = "10.142.1.0/24"
